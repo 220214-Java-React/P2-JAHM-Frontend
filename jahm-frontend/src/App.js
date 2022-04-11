@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import PlayButton from "./features/PlayButton";
 import Login from "./features/Login";
 import Profile from "./features/Profile";
 
@@ -13,6 +14,10 @@ function App() {
       <h1>JAHM Pokemon Quiz</h1>
       <Link to="/">Home</Link> {" | "}
       <Link to="/profile">Profile</Link>
+    </div>
+
+    <div className='testArea'>
+      <PlayButton/>
     </div>
     <Routes>
       <Route path="Login" element={<Login />}/>
