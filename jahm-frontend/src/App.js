@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import PlayButton from "./features/PlayButton";
 import Login from "./features/Login";

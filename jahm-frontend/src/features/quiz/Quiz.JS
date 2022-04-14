@@ -1,33 +1,20 @@
 import TimedQuiz from "./timed";
 import UntimedQuiz from "./untimed";
-export default function Quiz(props) {
-  const [qType, setType] = usestate("");
-  const [qDiff, setDiff] = usestate("");
 
 
-  if (qType == "") { return (selectType()) }
-  else if (qDiff == "") { return (selectDifficulty) }
-  else {
-    if (qType == "Timed") { return (TimedQuiz()) }
-    else { return (UntimedQuiz()) }
-  }
+function Quiz(props) {
 
+  let type = props.quizType;
+  let difficulty = props.difficulty;
+  
+return <>
+    {(type == "Timed") ? <TimedQuiz />//quizType={qType} quizDifficulty={qDiff} typeSet={setType} diffSet={setDiff} user={props.User} />
+      :
+      <UntimedQuiz /> //</UntimedQuiz>quizType={qType} quizDifficulty={qDiff} typeSet={setType} diffSet={setDiff} user={props.User} />}
+}
 
-  function quizTypeSelected(event) {
-
-    setType(event.target.value)
-
-  };
-
-
-  function difficultySelected(event) {
-
-    setDiff(event.target.value)
-
-  };
-
- 
-
- 
+  </>;
 
 }
+
+export default Quiz;
