@@ -1,4 +1,4 @@
-export default function UntimedQuiz ()
+export default function UntimedQuiz (props)
 {
     let totalHints;
     let scoreMultiplier;
