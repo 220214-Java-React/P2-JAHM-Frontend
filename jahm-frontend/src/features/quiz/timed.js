@@ -1,4 +1,4 @@
-export default function TimedQuiz ()
+export default function TimedQuiz (props)
 {
     let totalQuizTime;
     let timeBetweenHints;
