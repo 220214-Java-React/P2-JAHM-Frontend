@@ -18,8 +18,6 @@ function App() {
 
         <div className='testArea'>
           <Main />
-          <PlayButton />
-
         </div>
         <Routes>
           <Route path="Login" element={<Login />} />
