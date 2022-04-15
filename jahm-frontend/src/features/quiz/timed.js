@@ -20,6 +20,8 @@ export default function TimedQuiz(props) {
 
     return (
         <div className="pokeQuiz">
+            <h1>Who's that Pokemon? (Timed)</h1>
+
             <p>{timeRemaining}</p>
 
         </div>

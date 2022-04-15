@@ -5,7 +5,10 @@ export default function UntimedQuiz (props)
 
 
     return(
-        <></>
+        <>
+        <h1>Who's that Pokemon? (Untimed)</h1>
+        
+        </>
     );
  
 }
