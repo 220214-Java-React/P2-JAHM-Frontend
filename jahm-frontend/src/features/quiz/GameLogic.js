@@ -3,16 +3,11 @@ import { useState } from "react";
 
 function Game(props){
 
-    const [correctPKMN, setcorrectPKMN] = useState("e");
 
-
- if(cPKMN !==""){console.log(cPKMN)}
-
-console.log(correctPKMN);
     return <>
 
     <h1>Quiz Logic</h1>
-    {(correctPKMN == "e") ? <PlayButton cPKMN = {rPKMN} /> : <PlayQuiz/>}
+    {(correctPKMN == "e") ? <PlayButton/> : <PlayQuiz/>}
     
     </>;
 
