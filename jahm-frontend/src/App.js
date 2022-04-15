@@ -22,6 +22,10 @@ function App() {
     <Routes>
       <Route path="Login" element={<Login />}/>
       <Route path="Profile" element={<Profile/>}/>
+      <Route path='/' exact component={Home} />
+      <Route path='/quiz' component={Quiz} />
+      <Route path='/history' component={History} />
+      <Route path='/logout' component={Logout} />
     </Routes>
   </BrowserRouter>
     </>
