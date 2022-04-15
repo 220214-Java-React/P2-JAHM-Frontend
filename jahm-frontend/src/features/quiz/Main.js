@@ -1,7 +1,7 @@
 import React from "react";
 import Quiz from "./Quiz.js";
 import Settings from "./Settings";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PlayButton from "../PlayButton.js";
 
 function Main(props) {
@@ -9,9 +9,9 @@ function Main(props) {
     const [qType, setType] = useState("");
     const [qDiff, setDiff] = useState("");
     const [gamePlaying, setGamePlaying] = useState(false);
-    var result = "";
-    let pokemonChoice = [];
-    var correctPokemon;
+    const [pokemonChoice, setPokemonChoice] = useState([]);
+    const [correctPokemon, setCorrectPokemon] = useState([]);
+    var currentUser = "Sonic";
 
     function changeDifficulty(e) { setDiff(e); }
 
@@ -19,20 +19,22 @@ function Main(props) {
 
     function populatePokemonChoice(props) {
         console.log("Main added " + props.name + " to the list of Pokemon choices.");
-        pokemonChoice.push(props);
-
-        // Randomly set the correct pokemon out of the 5 that have now been added.
-        if (pokemonChoice.length > 4) {
-            correctPokemon = pokemonChoice.at(Math.floor(Math.random() * (4 - 1 + 1) + 1));
-            console.log("Main set the correct pokemon to: " + correctPokemon.name);
-            // Game is now running
-            changeGameState(true);
-        }
+        setPokemonChoice(pokemonChoice => [...pokemonChoice, props]);
     }
 
     function changeGameState(newState) {
         setGamePlaying(newState);
     }
+
+    useEffect(() => {
+        if (pokemonChoice.length > 4) {
+            setCorrectPokemon(pokemonChoice[0]);
+            changeGameState(true);
+        }
+
+        console.log('PokemonChoice has changed', pokemonChoice);
+     }, [pokemonChoice]);
+
 
     /**
      * If game is NOT playing, and if user has NOT selected qType and qDifficulty, display the PlayButton.
@@ -41,11 +43,18 @@ function Main(props) {
      */
     return <>
 
-        { gamePlaying == false ? <Settings difficulty={changeDifficulty} type={changeType} /> : null }
-        { qDiff !== "" && qType !== "" && gamePlaying !== true ?  <PlayButton populatePokemonChoice={populatePokemonChoice} /> : null }
+        { gamePlaying === false ? <Settings difficulty={changeDifficulty} type={changeType} /> : null }
+        { qDiff !== "" && qType !== "" && gamePlaying !== true ?  <PlayButton populatePokemonChoice={populatePokemonChoice} currentNumPokemon={pokemonChoice}/> : null }
         { gamePlaying === true ?
 
-            <Quiz quizType={qType} quizDifficulty={qDiff} typeSet={setType} diffSet={setDiff} user={props.User} /> : null }
+            <Quiz quizType={qType} 
+            quizDifficulty={qDiff} 
+            typeSet={setType} 
+            diffSet={setDiff} 
+            user={currentUser} 
+            pokemonChoice={pokemonChoice} 
+            correctPokemon={correctPokemon}
+            /> : null }
 
     </>;
 
