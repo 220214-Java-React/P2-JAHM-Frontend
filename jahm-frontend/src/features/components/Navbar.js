@@ -6,29 +6,26 @@ import {
   NavMenu,
   NavBtn,
   NavBtnLink
-} from './ Navigation.js'
+} from './Navigation.js'
 
 const Navbar = () => {
   return (
     <>
       <Nav>
-        <Navlink to="/">
+        <NavLink to="/">
           <h1>Logo</h1>
-        </Navlink>
+        </NavLink>
         <Bars />
         <NavMenu>
-          <Navlink to="/home" activeStyle>
+          <NavLink to="/home" activeStyle>
             Home
-          </Navlink>
-          <Navlink to="/quiz" activeStyle>
-            Quiz
-          </Navlink>
-          <Navlink to="/history" activeStyle>
-            History
-          </Navlink>
-          <Navlink to="/logout" activeStyle>
-            Logout
-          </Navlink>
+          </NavLink>
+          <NavLink to="/profile" activeStyle>
+            Profile
+          </NavLink>
+          <NavLink to="/login" activeStyle>
+            Login
+          </NavLink>
         </NavMenu>
         <NavBtn>
           <NavBtnLink to='/logout'>Logout</NavBtnLink>

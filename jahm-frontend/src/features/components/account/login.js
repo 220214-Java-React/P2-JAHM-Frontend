@@ -95,7 +95,7 @@ const Login = () => {
                         Need an Account?<br />
                         <span className="line">
                             {/*put router link goeshere*/}
-                            <a href="#">Sign Up</a>
+                            <a href="/register">Sign Up</a>
                         </span>
                     </p>
                 </section>
