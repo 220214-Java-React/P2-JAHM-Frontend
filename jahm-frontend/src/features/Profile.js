@@ -33,10 +33,11 @@ export default function Profile(props) {
       .then((response) => response.json())
       .catch((error) => console.log(error))
 
-    if (data.id) {
+    if (data) {
       console.log("The ID of the username submitted is: " + data.id);
       addFriend(data);
     } else {
+      alert("User not found!");
       console.log("User not found!");
     }
   }
@@ -60,9 +61,6 @@ export default function Profile(props) {
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify(newFriendPair)
     }).then(response => console.log(response.json()));
-
-
-    //console.log(...friendList, data);
   }
 
 
@@ -86,8 +84,8 @@ export default function Profile(props) {
       {friendList.length > 0 ?
         <div className="all-friends">
           {friendList.map((friend) => (
-            friend.user1.username == currentUser ? <FriendRecord key={friends++} friendID={friends++} friend={friend.user2} />
-              : <FriendRecord key={friends++} friendID={friends++} friend={friend.user1} />
+            friend.user1.username == currentUser ? <FriendRecord key={friends++} friendID={friends++} friend={friend.user2} currentUserID={currentUserID}/>
+              : <FriendRecord key={friends++} friendID={friends++} friend={friend.user1} currentUserID={currentUserID}/>
           ))}
         </div>
         : <h1>You have no friends!</h1>}
