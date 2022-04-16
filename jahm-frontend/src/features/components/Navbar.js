@@ -23,8 +23,8 @@ const Navbar = () => {
           <Navlink to="/quiz" activeStyle>
             Quiz
           </Navlink>
-          <Navlink to="/view past scores" activeStyle>
-            View Past Scores
+          <Navlink to="/history" activeStyle>
+            History
           </Navlink>
           <Navlink to="/logout" activeStyle>
             Logout
