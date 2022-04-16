@@ -10,6 +10,7 @@ function Quiz(props) {
   let totalQuizTime = 3;
   let scoreMultiplier = 1;
   let score = 10;
+  let choices = document.getElementsByClassName("choiceArea")[0];
 
   const [timeRemaining, setTimeRemaining] = useState(totalQuizTime);
   const [correctGuess, setCorrectGuess] = useState(false);
@@ -17,17 +18,17 @@ function Quiz(props) {
 
   useEffect(() => {
 
-    if (timeRemaining > 0) {
+    // If there is time remaining and this is a timed quiz
+    if (timeRemaining > 0 && props.quizType === "Timed") {
       setTimeout(() => {
         setTimeRemaining(timeRemaining - 1)
       }, 1000);
     } else {
-      if (correctGuess !== true) {
+      // There is no time remaining and this is a timed quiz
+      if (correctGuess !== true && props.quizType === "Timed") {
         console.log("You lose!");
+        scoreCalculation();
       }
-
-      // TODO
-      scoreCalculation();
 
       // Set gamePlaying to false (this will immediately send you back to the settings select screen according to current logic)
       //props.gamePlaying(false);
@@ -35,8 +36,13 @@ function Quiz(props) {
   }, [timeRemaining])
 
 
+  function quitQuiz(){
+    props.gamePlaying(false);
+  }
 
   function selectAnswer(e) {
+    // Disable the button
+    e.target.disabled = true;
     console.log("You picked: " + e.target.innerHTML);
     if (props.correctPokemon.name == e.target.innerHTML) {
       console.log("Correct!");
@@ -72,9 +78,23 @@ function Quiz(props) {
   /**
    * Send score to DB
    */
-  function sendScore(score) {
-    console.log("This is where I'd send a bunch of cool score information.");
-  }
+  async function sendScore(score) {
+      let newScore = {
+        "user": props.currentUser,
+        "score": score,
+        "mode": props.quizType
+      }
+  
+      console.log(newScore);
+  
+      // Send the score entry
+      let data = await fetch(`http://localhost:8080/scores/add`, 
+      {
+          method:'POST',
+          headers:{"Content-Type":"application/json"},
+          body: JSON.stringify(newScore)
+      }).then(response => console.log(response.json()));
+    }
 
   return (
     <div className="pokeQuiz">
@@ -83,21 +103,25 @@ function Quiz(props) {
       {props.quizType === "Timed" ? <p>{timeRemaining}</p> : <p hidden>No content</p>}
 
       <div className="choiceArea">
-        <div id="pokemonChoice0" onClick={selectAnswer}>
+        <button id="pokemonChoice0" onClick={selectAnswer}>
           {props.pokemonChoice[0].name}
-        </div>
-        <div id="pokemonChoice1" onClick={selectAnswer}>
+        </button>
+        <button id="pokemonChoice1" onClick={selectAnswer}>
           {props.pokemonChoice[1].name}
-        </div>
-        <div id="pokemonChoice2" onClick={selectAnswer}>
+        </button>
+        <button id="pokemonChoice2" onClick={selectAnswer}>
           {props.pokemonChoice[2].name}
-        </div>
-        <div id="pokemonChoice3" onClick={selectAnswer}>
+        </button>
+        <button id="pokemonChoice3" onClick={selectAnswer}>
           {props.pokemonChoice[3].name}
-        </div>
-        <div id="pokemonChoice4" onClick={selectAnswer}>
+        </button>
+        <button id="pokemonChoice4" onClick={selectAnswer}>
           {props.pokemonChoice[4].name}
-        </div>
+        </button>
+      </div>
+
+      <div>
+        <button id="quitButton" onClick={quitQuiz}>Quit</button>
       </div>
 
     </div>
