@@ -1,36 +1,25 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import PlayButton from "./features/PlayButton";
-import Login from './features/components/account/Login';
 import Profile from "./features/Profile";
-
+import Login from "./features/components/account/login.js"
 import './App.css';
-import Register from './features/components/account/Register';
+import Navbar from "./features/components/Navbar";
 
 function App() {
   return (
     <>
-    <BrowserRouter>
-    <div className="App">
-      <Login />
-      <Register />
-      <h1>JAHM Pokemon Quiz</h1>
-      <Link to="/">Home</Link> {" | "}
-      <Link to="/profile">Profile</Link>
-    </div>
+      <BrowserRouter>
+        <div className="App">
+          <h1>JAH Pokemon Quiz</h1>
+          <Navbar/>
+        </div>
 
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path='/history' component={History} />
+        </Routes>
 
-    <div className='testArea'>
-      <PlayButton/>
-    </div>
-    <Routes>
-      <Route path="login" element={<login />}/>
-      
-      <Route path="Profile" element={<Profile/>}/>
-      
-      <Route path='/history' component={History} />
-      
-    </Routes>
-  </BrowserRouter>
+      </BrowserRouter>
     </>
   );
 }
