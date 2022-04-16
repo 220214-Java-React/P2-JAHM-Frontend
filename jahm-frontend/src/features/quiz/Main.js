@@ -33,6 +33,14 @@ function Main(props) {
     function changeGameState(newState) {
         console.log("Game state set to " + newState);
         setGamePlaying(newState);
+
+        // If the game is being changed into a "not playing" state, reset all of the data
+        if (newState == false) {
+            setType("");
+            setDiff("");
+            setPokemonChoice([]);
+            setCorrectPokemon([]);
+        }
     }
 
     /**
