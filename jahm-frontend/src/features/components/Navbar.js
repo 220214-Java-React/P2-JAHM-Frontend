@@ -20,14 +20,11 @@ const Navbar = () => {
           <NavLink to="/home" activeStyle>
             Home
           </NavLink>
-          <NavLink to="/quiz" activeStyle>
-            Quiz
+          <NavLink to="/profile" activeStyle>
+            Profile
           </NavLink>
-          <NavLink to="/history" activeStyle>
-            History
-          </NavLink>
-          <NavLink to="/logout" activeStyle>
-            Logout
+          <NavLink to="/login" activeStyle>
+            Login
           </NavLink>
         </NavMenu>
         <NavBtn>
