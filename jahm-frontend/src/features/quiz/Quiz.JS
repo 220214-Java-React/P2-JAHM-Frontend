@@ -1,16 +1,11 @@
-//import TimedQuiz from "./timed";
-//import UntimedQuiz from "./untimed";
 import { useState, useEffect } from "react";
-
 
 function Quiz(props) {
 
   //let difficulty = props.difficulty;
-  // Dropped time limit for debug purposes
-  let totalQuizTime = 3;
+  let totalQuizTime = 10;
   let scoreMultiplier = 1;
   let score = 10;
-  let choices = document.getElementsByClassName("choiceArea")[0];
 
   const [timeRemaining, setTimeRemaining] = useState(totalQuizTime);
   const [correctGuess, setCorrectGuess] = useState(false);
@@ -35,28 +30,39 @@ function Quiz(props) {
     }
   }, [timeRemaining])
 
-
-  function quitQuiz(){
+  /**
+   * Tell Main the game is over
+   */
+  function quitQuiz() {
     props.gamePlaying(false);
   }
 
+  /**
+   * What to do after selecting an answer. If the user has already guessed correctly the buttons won't do anything.
+   * @param {*} e 
+   */
   function selectAnswer(e) {
-    // Disable the button
-    e.target.disabled = true;
-    console.log("You picked: " + e.target.innerHTML);
-    if (props.correctPokemon.name == e.target.innerHTML) {
-      console.log("Correct!");
 
-      setCorrectGuess(true);
-      scoreMultiplier = timeRemaining;
-      setTimeRemaining(0);
+    if (!correctGuess) {
 
-      scoreCalculation();
+      console.log("You picked: " + e.target.innerHTML);
 
-      // Set gamePlaying to false (this will immediately send you back to the settings select screen according to current logic)
-      //props.gamePlaying(false);
-    } else {
-      console.log("Incorrect!");
+      // CORRECT
+      if (props.correctPokemon.name == e.target.innerHTML) {
+
+        console.log("Correct!");
+
+        setCorrectGuess(true);
+        scoreMultiplier = timeRemaining;
+        setTimeRemaining(0);
+        scoreCalculation();
+
+      } else {
+        console.log("Incorrect!");
+      }
+
+      // Disable the button
+      e.target.disabled = true;
     }
   }
 
@@ -79,22 +85,22 @@ function Quiz(props) {
    * Send score to DB
    */
   async function sendScore(score) {
-      let newScore = {
-        "user": props.currentUser,
-        "score": score,
-        "mode": props.quizType
-      }
-  
-      console.log(newScore);
-  
-      // Send the score entry
-      let data = await fetch(`http://localhost:8080/scores/add`, 
-      {
-          method:'POST',
-          headers:{"Content-Type":"application/json"},
-          body: JSON.stringify(newScore)
-      }).then(response => console.log(response.json()));
+    let newScore = {
+      "user": props.currentUser,
+      "score": score,
+      "mode": props.quizType
     }
+
+    console.log(newScore);
+
+    // Send the score entry
+    let data = await fetch(`http://localhost:8080/scores/add`,
+      {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newScore)
+      }).then(response => console.log(response.json()));
+  }
 
   return (
     <div className="pokeQuiz">
