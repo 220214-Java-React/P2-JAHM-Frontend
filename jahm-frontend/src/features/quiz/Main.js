@@ -17,23 +17,36 @@ function Main(props) {
 
     function changeType(e) { setType(e); }
 
+    /**
+     * Tell Main what Pokemon the Quiz can use
+     * @param {*} props 
+     */
     function populatePokemonChoice(props) {
         console.log("Main added " + props.name + " to the list of Pokemon choices.");
         setPokemonChoice(pokemonChoice => [...pokemonChoice, props]);
     }
 
+    /**
+     * Set whether the game is playing or not
+     * @param {*} newState 
+     */
     function changeGameState(newState) {
+        console.log("Game state set to " + newState);
         setGamePlaying(newState);
     }
 
+    /**
+     * Start the game immediately after we have enough Pokemon. This avoids the "click twice to start" error.
+     */
     useEffect(() => {
         if (pokemonChoice.length > 4) {
+            // DEBUG: It's always the first Pokemon, but this can be changed back to random.
             setCorrectPokemon(pokemonChoice[0]);
             changeGameState(true);
         }
 
         console.log('PokemonChoice has changed', pokemonChoice);
-     }, [pokemonChoice]);
+    }, [pokemonChoice]);
 
 
     /**
@@ -43,18 +56,19 @@ function Main(props) {
      */
     return <>
 
-        { gamePlaying === false ? <Settings difficulty={changeDifficulty} type={changeType} /> : null }
-        { qDiff !== "" && qType !== "" && gamePlaying !== true ?  <PlayButton populatePokemonChoice={populatePokemonChoice} currentNumPokemon={pokemonChoice}/> : null }
-        { gamePlaying === true ?
+        {gamePlaying === false ? <Settings difficulty={changeDifficulty} type={changeType} /> : null}
+        {qDiff !== "" && qType !== "" && gamePlaying !== true ? <PlayButton populatePokemonChoice={populatePokemonChoice} currentNumPokemon={pokemonChoice} /> : null}
+        {gamePlaying === true ?
 
-            <Quiz quizType={qType} 
-            quizDifficulty={qDiff} 
-            typeSet={setType} 
-            diffSet={setDiff} 
-            user={currentUser} 
-            pokemonChoice={pokemonChoice} 
-            correctPokemon={correctPokemon}
-            /> : null }
+            <Quiz quizType={qType}
+                quizDifficulty={qDiff}
+                typeSet={setType}
+                diffSet={setDiff}
+                currentUser={currentUser}
+                pokemonChoice={pokemonChoice}
+                correctPokemon={correctPokemon}
+                gamePlaying={changeGameState}
+            /> : null}
 
     </>;
 
