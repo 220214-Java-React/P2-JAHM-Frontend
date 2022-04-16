@@ -1,8 +1,10 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Profile from "./features/Profile";
 import Login from "./features/components/account/login.js"
-import './App.css';
+import Register from "./features/components/account/Register.js"
 import Navbar from "./features/components/Navbar";
+import Main from "./features/quiz/Main.js";
+import './App.css';
 
 function App() {
   return (
@@ -14,9 +16,10 @@ function App() {
         </div>
 
         <Routes>
+          <Route path="/home" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path='/history' component={History} />
+          <Route path='/register' element={<Register/>} />
         </Routes>
 
       </BrowserRouter>
