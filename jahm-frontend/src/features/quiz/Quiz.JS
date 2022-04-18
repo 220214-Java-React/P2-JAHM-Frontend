@@ -86,7 +86,7 @@ function Quiz(props) {
   }
 
   function createNewHint(hintTemplate) {
-    if (hintsRemaining >= 0 && timeRemaining > 0) {
+    if (hints < 2 ) {
 
       let hintProperty = "";
 
