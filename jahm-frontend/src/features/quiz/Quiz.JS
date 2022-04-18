@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 function Quiz(props) {
 
-  //let difficulty = props.difficulty;
+  const API_URL = "http://p2jahquiz-env.eba-vbcumprb.us-east-1.elasticbeanstalk.com";
   let totalQuizTime = 10;
   let scoreMultiplier = 1;
   let score = 10;
@@ -95,7 +95,7 @@ function Quiz(props) {
     console.log(newScore);
 
     // Send the score entry
-    let data = await fetch(`http://localhost:8080/scores`,
+    let data = await fetch(`${API_URL}/scores`,
       {
         method: 'POST',
         headers: { "Content-Type": "application/json" },

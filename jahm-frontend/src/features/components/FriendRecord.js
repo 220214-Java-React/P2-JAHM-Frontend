@@ -2,6 +2,8 @@ const FriendRecord = (props) => {
 // TODO: Delete button
 
 async function deleteFriend() {
+  const API_URL = "http://p2jahquiz-env.eba-vbcumprb.us-east-1.elasticbeanstalk.com";
+
     console.log("delete friend");
     let oldFriendPair = {
       "friend1": props.currentUserID,
@@ -11,7 +13,7 @@ async function deleteFriend() {
     console.log(oldFriendPair);
 
     // Send the friend pair
-    let data = await fetch(`http://localhost:8080/friends/delete`, 
+    let data = await fetch(`${API_URL}/friends/delete`, 
     {
         method:'DELETE',
         headers:{"Content-Type":"application/json"},

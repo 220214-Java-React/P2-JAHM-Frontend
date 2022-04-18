@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'http://p2jahquiz-env.eba-vbcumprb.us-east-1.elasticbeanstalk.com'
 });

@@ -4,6 +4,8 @@ import FriendRecord from "./components/FriendRecord";
 export default function Profile(props) {
   const [username, setUsername] = useState('');
 
+  const API_URL = "http://p2jahquiz-env.eba-vbcumprb.us-east-1.elasticbeanstalk.com";
+
   var currentUser = "Sonic";
   var currentUserID = 2;
   var friends = 0;
@@ -15,7 +17,7 @@ export default function Profile(props) {
   useEffect(() => getAllfriends(), []);
 
   function getAllfriends() {
-    fetch(`http://localhost:8080/friends/${currentUserID}`)
+    fetch(`${API_URL}/friends/${currentUserID}`)
       .then((response) => response.json())
       .catch((error) => console.log(error))
       .then((data) => seedfriends(data));
@@ -29,7 +31,7 @@ export default function Profile(props) {
  * Make sure the username entered belongs to an existing user
  */
   async function checkFriendExists() {
-    let data = await fetch(`http://localhost:8080/users/${username}`)
+    let data = await fetch(`${API_URL}/users/${username}`)
       .then((response) => response.json())
       .catch((error) => console.log(error))
 
@@ -55,7 +57,7 @@ export default function Profile(props) {
     console.log(newFriendPair);
 
     // Send the friend pair
-    let data = await fetch(`http://localhost:8080/friends/add`, 
+    let data = await fetch(`${API_URL}/friends/add`, 
     {
         method:'POST',
         headers:{"Content-Type":"application/json"},
