@@ -86,15 +86,17 @@ function Quiz(props) {
    */
   async function sendScore(score) {
     let newScore = {
-      "user": props.currentUser,
-      "score": score,
-      "mode": props.quizType
+      "player": props.currentUser,
+      "points": score,
+      "mode": props.quizType,
+      "quizMode" : props.quizMode,
+      "quizDifficulty" : props.quizDifficulty
     }
 
     console.log(newScore);
 
     // Send the score entry
-    let data = await fetch(`http://localhost:8080/scores/add`,
+    let data = await fetch(`http://localhost:8080/scores`,
       {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
