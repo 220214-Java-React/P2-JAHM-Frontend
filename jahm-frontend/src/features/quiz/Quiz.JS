@@ -88,8 +88,7 @@ function Quiz(props) {
     let newScore = {
       "player": props.currentUser,
       "points": score,
-      "mode": props.quizType,
-      "quizMode" : props.quizMode,
+      "quizMode" : props.quizType,
       "quizDifficulty" : props.quizDifficulty
     }
 
@@ -101,7 +100,12 @@ function Quiz(props) {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newScore)
-      }).then(response => console.log(response.json()));
+      }).then(response => processResponse(response.json()));
+
+      function processResponse(resp) {
+        alert("Score submitted!");
+        quitQuiz();
+      }
   }
 
   return (
