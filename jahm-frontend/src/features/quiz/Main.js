@@ -11,7 +11,11 @@ function Main(props) {
     const [gamePlaying, setGamePlaying] = useState(false);
     const [pokemonChoice, setPokemonChoice] = useState([]);
     const [correctPokemon, setCorrectPokemon] = useState([]);
-    var currentUser = "Sonic";
+    var currentUser = {
+        "id" : 2,
+        "username" : "Sonic",
+        "password" : "Hedgehog"
+    };
 
     function changeDifficulty(e) { setDiff(e); }
 
