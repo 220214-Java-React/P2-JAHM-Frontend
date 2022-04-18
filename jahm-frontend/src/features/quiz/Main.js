@@ -56,8 +56,6 @@ function Main(props) {
             setCorrectPokemon(pokemonChoice[0]);
             changeGameState(true);
         }
-
-        console.log('PokemonChoice has changed', pokemonChoice);
     }, [pokemonChoice]);
 
 
