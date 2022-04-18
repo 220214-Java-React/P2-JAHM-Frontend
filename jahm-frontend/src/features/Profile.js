@@ -5,7 +5,7 @@ export default function Profile(props) {
   const [username, setUsername] = useState('');
 
   var currentUser = "Sonic";
-  var currentUserID = 1;
+  var currentUserID = 2;
   var friends = 0;
 
   // This is where our friends are stored
@@ -85,7 +85,7 @@ export default function Profile(props) {
         <div className="all-friends">
           {friendList.map((friend) => (
             friend.user1.username == currentUser ? <FriendRecord key={friends++} friendID={friends++} friend={friend.user2} currentUserID={currentUserID}/>
-              : <FriendRecord key={friends++} friendID={friends++} friend={friend.user1} currentUserID={currentUserID}/>
+              : friend.user2.username == currentUser ? null : <FriendRecord key={friends++} friendID={friends++} friend={friend.user1} currentUserID={currentUserID}/>
           ))}
         </div>
         : <h1>You have no friends!</h1>}
