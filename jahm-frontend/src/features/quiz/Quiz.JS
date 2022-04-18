@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
+import GiveHint from "../components/GiveHint";
+import ShowHints from "../components/ShowHints";
 
 function Quiz(props) {
 
-  //let difficulty = props.difficulty;
   let totalQuizTime = 10;
   let scoreMultiplier = 1;
   let score = 10;
+  let hints = 0;
+
 
   const [timeRemaining, setTimeRemaining] = useState(totalQuizTime);
   const [correctGuess, setCorrectGuess] = useState(false);
+  const [hintList, setHintList] = useState([]);
+  const [hintsRemaining, setHintsRemaining] = useState(2);
 
 
   useEffect(() => {
@@ -54,7 +59,6 @@ function Quiz(props) {
 
         setCorrectGuess(true);
         scoreMultiplier = timeRemaining;
-        setTimeRemaining(0);
         scoreCalculation();
 
       } else {
@@ -81,6 +85,33 @@ function Quiz(props) {
     }
   }
 
+  function createNewHint(hintTemplate) {
+    if (hintsRemaining >= 0 && timeRemaining > 0) {
+
+      let hintProperty = "";
+
+      switch (hintTemplate) {
+        case "Weight":
+
+          hintProperty = hintTemplate.concat(`: ${props.correctPokemon.weight}`);
+          break;
+
+        case "Height":
+          hintProperty = hintTemplate.concat(`: ${props.correctPokemon.height}`);
+          break;
+      }
+
+      let newHint = {
+        "content": hintProperty
+      }
+      setHintList([...hintList, newHint]);
+      setHintsRemaining(hintsRemaining - 1);
+    } else {
+      console.log("No hints remaining!");
+      alert("No hints remaining!");
+    }
+  }
+
   /**
    * Send score to DB
    */
@@ -88,8 +119,8 @@ function Quiz(props) {
     let newScore = {
       "player": props.currentUser,
       "points": score,
-      "quizMode" : props.quizType,
-      "quizDifficulty" : props.quizDifficulty
+      "quizMode": props.quizType,
+      "quizDifficulty": props.quizDifficulty
     }
 
     console.log(newScore);
@@ -102,17 +133,17 @@ function Quiz(props) {
         body: JSON.stringify(newScore)
       }).then(response => processResponse(response.json()));
 
-      function processResponse(resp) {
-        alert("Score submitted!");
-        quitQuiz();
-      }
+    function processResponse(resp) {
+      alert("Score submitted!");
+      quitQuiz();
+    }
   }
 
   return (
     <div className="pokeQuiz">
       <h1>Who's that Pokemon?</h1>
 
-      {props.quizType === "Timed" ? <p>{timeRemaining}</p> : <p hidden>No content</p>}
+      {props.quizType === "Timed" && !correctGuess ? <p>{timeRemaining}</p> : <p hidden>No content</p>}
 
       <div className="choiceArea">
         <button id="pokemonChoice0" onClick={selectAnswer}>
@@ -135,6 +166,17 @@ function Quiz(props) {
       <div>
         <button id="quitButton" onClick={quitQuiz}>Quit</button>
       </div>
+
+      <GiveHint hintNumber={hintsRemaining} gamePlaying={timeRemaining} newHint={createNewHint} />
+
+      {hintList ?
+        <div className="all-hints">
+
+          {hintList.map((hint) => (
+            <ShowHints key={hints++} num={hints} hint={hint.content} />
+          ))}
+        </div>
+        : null}
 
     </div>
   );
